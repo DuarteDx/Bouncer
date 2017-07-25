@@ -29,6 +29,7 @@ public class GameplayScene implements Scene {
     @Override
     public void update() {
         player.update();
+
         obstacleManager.update();
 
         if(obstacleManager.playerCollide(player)) {

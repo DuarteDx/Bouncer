@@ -41,14 +41,6 @@ public class Player implements GameObject{
 
     @Override
     public void update() {
-
-
-        rect.set(this.x - rect.width()/2, this.y - rect.height()/2,this.x + rect.width()/2, this.y + rect.height()/2);
-
-    }
-
-    public void update(Point point) {
-
         this.x += this.xVelocity;
 
         // While on the wall
