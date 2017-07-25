@@ -16,15 +16,13 @@ public class Player implements GameObject{
     private int color;
 
     private int x = 0;
-    private int y = Constants.SCREEN_HEIGHT / 5;
+    private int y = Constants.SCREEN_HEIGHT/2;
 
-    private float xSpeed = 1.2f;
-    private float xBoost = 0;
+    private float xVelocity = 0f;
 
-    private float ySpeed = 1;
-    private float yVelocityWall = Constants.WALLSPEED;
-    private float yVelocityAir = Constants.AIRSPEED;
-    private float yGravity = 0.5f;
+    private float yVelocityWall = 4.5f;
+    private float yVelocityAir = 1f;
+    private float yGravity = 2.5f;
 
 
     public Player(Rect rect, int color)  {
@@ -44,37 +42,31 @@ public class Player implements GameObject{
     @Override
     public void update() {
 
-        this.x += xSpeed;
-        this.y += ySpeed;
 
         rect.set(this.x - rect.width()/2, this.y - rect.height()/2,this.x + rect.width()/2, this.y + rect.height()/2);
 
     }
 
     public void update(Point point) {
-        //left, top, right, bottom
-        this.y += ySpeed;
-        this.x += xSpeed;
-        rect.set(this.x - rect.width()/2, this.y - rect.height()/2,this.x + rect.width()/2, this.y + rect.height()/2);
 
-        if(this.x == 0 || this.x == Constants.SCREEN_WIDTH) {
-            this.xSpeed = 0;
-        }
+        this.x += this.xVelocity;
 
         // While on the wall
-        if(this.x == 0 || this.x == Constants.SCREEN_WIDTH) {
-            this.y += this.yVelocityWall;
+        if(this.x <= 0 || this.x >= Constants.SCREEN_WIDTH) {
             this.yVelocityAir = Constants.AIRSPEED;
+            this.y += this.yVelocityWall;
+            System.out.println("On wall");
         }
 
         // While in the air
         if(this.x > 0 && this.x < Constants.SCREEN_WIDTH) {
+            System.out.println("On air");
             this.yVelocityAir += this.yGravity;
             this.y += this.yVelocityAir;
-            this.yVelocityWall = Constants.WALLSPEED;
-            if(this.yVelocityAir >= Constants.MINSPEED) {
+            this.yVelocityWall = 4.5f;
+            /*if(this.yVelocityAir >= Constants.MINSPEED) {
                 this.yVelocityAir = Constants.MINSPEED;
-            }
+            }*/
         }
 
         // In the floor
@@ -88,20 +80,22 @@ public class Player implements GameObject{
         if(this.y <= 0) {
             this.y = 0;
             this.yVelocityAir = -Constants.AIRSPEED/6;
-            this.xSpeed += 1.5;
+            this.xVelocity *= 0.3;
         }
 
         if(this.x <= 0) {
             this.x = 0;
-            this.xSpeed = 0;
+            this.xVelocity = 0;
             this.yVelocityAir = Constants.AIRSPEED;
         }
 
         if(this.x >= Constants.SCREEN_WIDTH) {
             this.x = Constants.SCREEN_WIDTH;
-            this.xSpeed = 0;
+            this.xVelocity = 0;
             this.yVelocityAir = Constants.AIRSPEED;
         }
+        //left, top, right, bottom
+        rect.set(this.x - rect.width()/2, this.y - rect.height()/2,this.x + rect.width()/2, this.y + rect.height()/2);
     }
 
     public void onTouch(MotionEvent event) {
@@ -110,11 +104,11 @@ public class Player implements GameObject{
             case MotionEvent.ACTION_DOWN:
                 // Jump RIGHT
                 if(this.x == 0) {
-                    this.xSpeed = 10;
+                    this.xVelocity = 35;
                 }
                 // Jump LEFT
                 else if(this.x == Constants.SCREEN_WIDTH) {
-                    this.xSpeed = -10;
+                    this.xVelocity = -35;
                 }
         }
     }

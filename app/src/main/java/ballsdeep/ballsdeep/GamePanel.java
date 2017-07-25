@@ -28,7 +28,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         thread = new MainThread(getHolder(), this);
 
         player = new Player(new Rect(100,100,200,200), Color.WHITE);
-        playerPoint = new Point(0, Constants.SCREEN_HEIGHT/5);
+        playerPoint = new Point(Constants.SCREEN_WIDTH/2, Constants.SCREEN_HEIGHT/2);
 
         setFocusable(true);
     }
