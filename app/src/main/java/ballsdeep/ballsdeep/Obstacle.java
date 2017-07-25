@@ -12,21 +12,30 @@ import android.support.constraint.solver.widgets.Rectangle;
 public class Obstacle implements GameObject {
 
     private Rect rect;
+    private Rect rect2;
     private int color;
+    private int startX;
+    private int playerGap;
 
-    public Obstacle(Rect rect, int color)  {
-        this.rect = rect;
+    public Obstacle(int rectHeight, int color, int startX, int startY, int playerGap)  {
         this.color = color;
+        rect = new Rect(0, startY, startX, startY + rectHeight);
+        rect2 = new Rect(startX + playerGap, startY, Constants.SCREEN_WIDTH, startY + rectHeight);
+    }
+
+    public Rect getRectangle() {
+        return rect;
+    }
+
+    public void incrementY(float y) {
+        rect.top += y;
+        rect.bottom += y;
+        rect2.top += y;
+        rect2.bottom += y;
     }
 
     public boolean playerCollides(Player player) {
-        if (rect.contains(player.getRect().left, player.getRect().top)
-                || rect.contains(player.getRect().right, player.getRect().top)
-                || rect.contains(player.getRect().left, player.getRect().bottom)
-                || rect.contains(player.getRect().right, player.getRect().bottom)) {
-            return true;
-        }
-        return false;
+        return Rect.intersects(rect, player.getRect()) || Rect.intersects(rect2, player.getRect());
     }
 
     @Override
@@ -34,6 +43,7 @@ public class Obstacle implements GameObject {
         Paint paint = new Paint();
         paint.setColor(color);
         canvas.drawRect(rect, paint);
+        canvas.drawRect(rect2, paint);
     }
 
     @Override
