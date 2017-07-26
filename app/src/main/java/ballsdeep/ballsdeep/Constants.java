@@ -10,5 +10,7 @@ public class Constants {
     public static final float MINSPEED = -20f;
     public static final float MAXSPEED = 20f;
     public static final float AIRSPEED = -45f;
-    public static final float WALLSPEED = 0.6f;
+    public static final float WALLSPEED = 4.5f;
+    public static final float XSPEED = (1080 / 1080) * 35;
+    public static final float GRAVITY = 2.5f;
 }

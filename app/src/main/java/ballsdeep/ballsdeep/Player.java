@@ -20,9 +20,9 @@ public class Player implements GameObject{
 
     private float xVelocity = 0f;
 
-    private float yVelocityWall = 4.5f;
-    private float yVelocityAir = 1f;
-    private float yGravity = 2.5f;
+    private float yVelocityWall = Constants.WALLSPEED;
+    private float yVelocityAir;
+    private float yGravity = Constants.GRAVITY;
 
 
     public Player(Rect rect, int color)  {
@@ -42,12 +42,13 @@ public class Player implements GameObject{
     @Override
     public void update() {
         this.x += this.xVelocity;
+        System.out.println(Constants.SCREEN_WIDTH);
 
         // While on the wall
         if(this.x <= 0 || this.x >= Constants.SCREEN_WIDTH) {
             this.yVelocityAir = Constants.AIRSPEED;
             this.y += this.yVelocityWall;
-            System.out.println("On wall");
+            //System.out.println("On wall");
         }
 
         // While in the air
@@ -55,7 +56,7 @@ public class Player implements GameObject{
             System.out.println("On air");
             this.yVelocityAir += this.yGravity;
             this.y += this.yVelocityAir;
-            this.yVelocityWall = 4.5f;
+            this.yVelocityWall = Constants.WALLSPEED;
             /*if(this.yVelocityAir >= Constants.MINSPEED) {
                 this.yVelocityAir = Constants.MINSPEED;
             }*/
@@ -96,11 +97,11 @@ public class Player implements GameObject{
             case MotionEvent.ACTION_DOWN:
                 // Jump RIGHT
                 if(this.x == 0) {
-                    this.xVelocity = 35;
+                    this.xVelocity = Constants.XSPEED;
                 }
                 // Jump LEFT
                 else if(this.x == Constants.SCREEN_WIDTH) {
-                    this.xVelocity = -35;
+                    this.xVelocity = -Constants.XSPEED;
                 }
         }
     }
