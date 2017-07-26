@@ -1,5 +1,7 @@
 package ballsdeep.ballsdeep;
 
+import android.content.Context;
+
 /**
  * Created by Goncalo on 25/07/2017.
  */
@@ -7,6 +9,7 @@ package ballsdeep.ballsdeep;
 public class Constants {
     public static int SCREEN_WIDTH;
     public static int SCREEN_HEIGHT;
+    public static Context CURRENT_CONTEXT;
     public static final float MINSPEED = -20f;
     public static final float MAXSPEED = 20f;
     public static final float AIRSPEED = -45f;

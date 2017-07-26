@@ -15,6 +15,10 @@ public class Player implements GameObject{
     private Rect rect;
     private int color;
 
+    private Animation idle;
+    private Animation walkRight;
+    private Animation walkLeft;
+
     private int x = 0;
     private int y = Constants.SCREEN_HEIGHT/2;
 
