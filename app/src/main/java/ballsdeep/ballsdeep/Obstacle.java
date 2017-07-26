@@ -15,27 +15,37 @@ public class Obstacle implements GameObject {
     private Rect rect2;
     private int color;
     private int startX;
-    private int playerGap;
+    private boolean scored = false;
 
-    public Obstacle(int rectHeight, int color, int startX, int startY, int playerGap)  {
+    public Obstacle(int rectHeight, int color, int width, int startY, boolean left)  {
         this.color = color;
-        rect = new Rect(0, startY, startX, startY + rectHeight);
-        rect2 = new Rect(startX + playerGap, startY, Constants.SCREEN_WIDTH, startY + rectHeight);
+        if (left) {
+            rect = new Rect(0, startY, width, startY + rectHeight);
+        }
+        else {
+            rect = new Rect(Constants.SCREEN_WIDTH - width, startY, Constants.SCREEN_WIDTH, startY + rectHeight);
+        }
     }
 
     public Rect getRectangle() {
         return rect;
     }
 
+    public boolean getScored() {
+        return scored;
+    }
+
+    public void setScored() {
+        scored = true;
+    }
+
     public void incrementY(float y) {
         rect.top += y;
         rect.bottom += y;
-        rect2.top += y;
-        rect2.bottom += y;
     }
 
     public boolean playerCollides(Player player) {
-        return Rect.intersects(rect, player.getRect()) || Rect.intersects(rect2, player.getRect());
+        return Rect.intersects(rect, player.getRect());
     }
 
     @Override
@@ -43,7 +53,6 @@ public class Obstacle implements GameObject {
         Paint paint = new Paint();
         paint.setColor(color);
         canvas.drawRect(rect, paint);
-        canvas.drawRect(rect2, paint);
     }
 
     @Override

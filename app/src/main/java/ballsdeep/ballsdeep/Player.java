@@ -46,24 +46,18 @@ public class Player implements GameObject{
     @Override
     public void update() {
         this.x += this.xVelocity;
-        System.out.println(Constants.SCREEN_WIDTH);
 
         // While on the wall
         if(this.x <= 0 || this.x >= Constants.SCREEN_WIDTH) {
             this.yVelocityAir = Constants.AIRSPEED;
             this.y += this.yVelocityWall;
-            //System.out.println("On wall");
         }
 
         // While in the air
         if(this.x > 0 && this.x < Constants.SCREEN_WIDTH) {
-            System.out.println("On air");
             this.yVelocityAir += this.yGravity;
             this.y += this.yVelocityAir;
             this.yVelocityWall = Constants.WALLSPEED;
-            /*if(this.yVelocityAir >= Constants.MINSPEED) {
-                this.yVelocityAir = Constants.MINSPEED;
-            }*/
         }
 
         // In the floor
